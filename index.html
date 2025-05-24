@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Narendra Polisetti - Portfolio</title>
+  <style>
+    :root {
+      --bg-light: #f0f2f5;
+      --bg-dark: #121212;
+      --text-light: #333;
+      --text-dark: #eee;
+      --primary-color: #0077cc;
+      --shadow-light: rgba(0, 0, 0, 0.1);
+      --shadow-dark: rgba(255, 255, 255, 0.1);
+      --font-base: 20px;
+      --font-large: 22px;
+      --font-xlarge: 28px;
+      --hover-shadow: 0 8px 20px rgba(0, 119, 204, 0.4);
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: var(--bg-light);
+      color: var(--text-light);
+      transition: background 0.3s ease, color 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      padding: 1rem 1rem 2rem;
+      box-sizing: border-box;
+      overflow-x: hidden;
+      font-size: var(--font-base);
+      line-height: 1.65;
+      max-width: 98vw;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    body.dark-mode {
+      background: var(--bg-dark);
+      color: var(--text-dark);
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: nowrap;
+      margin-bottom: 2rem;
+      gap: 1rem;
+      max-width: 100%;
+      user-select: none;
+    }
+
+    /* Left group: GitHub, LinkedIn */
+    .header-left {
+      display: flex;
+      gap: 1.6rem;
+      flex: 1 1 30%;
+    }
+
+    /* Center: Name */
+    .header-center {
+  flex: 1 1 40%;
+  text-align: center;
+  font-size: clamp(1.4rem, 5vw, 2.4rem); /* Responsive font size */
+  font-weight: 700;
+  white-space: nowrap;
+  letter-spacing: 1px;
+  color: #2C3E50;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+
+    /* Right group: Email, Resume, Toggle */
+    .header-right {
+      display: flex;
+      gap: 1.6rem;
+      justify-content: flex-end;
+      flex: 1 1 30%;
+      font-size: var(--font-large);
+    }
+
+    header a,
+    header button {
+      font-weight: 600;
+      color: var(--primary-color);
+      text-decoration: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 0.25rem 0.6rem;
+      border-radius: 7px;
+      user-select: none;
+      transition: color 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
+      white-space: nowrap;
+    }
+
+    header a:hover,
+    header button:hover {
+      color: #005fa3;
+      text-decoration: underline;
+      background-color: rgba(0, 119, 204, 0.15);
+      transform: scale(1.1);
+    }
+
+    #darkModeToggle {
+      font-size: 1.9rem;
+      border: 1.8px solid var(--primary-color);
+      background-color: transparent;
+      transition: background-color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+      line-height: 1;
+    }
+
+    #darkModeToggle:hover {
+      background-color: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+      transform: scale(1.15);
+    }
+
+    main {
+      flex: 1 1 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+      width: 100%;
+    }
+
+    .skills-projects {
+      display: flex;
+      gap: 3rem;
+      justify-content: center;
+      flex-wrap: nowrap;
+      max-width: 100%;
+    }
+
+    .skills {
+      background: white;
+      padding: 2.5rem;
+      border-right: 3px solid #0077cc; 
+      border-left: 3px solid #3399cc;
+      border-radius: 14px;
+      box-shadow: 0 8px 22px var(--shadow-light);
+      min-width: 320px;
+      font-size: var(--font-large);
+      line-height: 1.6;
+      opacity: 0;
+      transform: translateY(30px);
+      animation-fill-mode: forwards;
+      animation-duration: 0.9s;
+      animation-timing-function: ease-out;
+      animation-delay: 0.3s;
+      animation-name: fadeSlideIn;
+      position: relative;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+      flex: 1 1 30%;
+      padding-right: 1.5rem;
+      box-sizing: border-box;
+    }
+
+    .skills:hover {
+      box-shadow: var(--hover-shadow);
+      transform: translateY(-5px) scale(1.03);
+      cursor: default;
+    }
+
+    body.dark-mode .skills {
+      background: #1e1e1e;
+      box-shadow: 0 8px 22px var(--shadow-dark);
+      color: var(--text-dark);
+    }
+
+    /* Stylish bullet icons for skills */
+    .skills ul {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+    .skills li {
+      margin-bottom: 1rem;
+      padding-left: 28px;
+      position: relative;
+      font-weight: 600;
+      cursor: default;
+      transition: color 0.25s ease;
+    }
+    .skills li strong {
+      color: var(--primary-color);
+      font-weight: 700;
+    }
+    /* Custom bullet with icon and background circle */
+    .skills li::before {
+      content: "✔";
+      position: absolute;
+      left: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      background-color: var(--primary-color);
+      color: white;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      text-align: center;
+      line-height: 22px;
+      font-size: 14px;
+      box-shadow: 0 0 7px var(--primary-color);
+      user-select: none;
+      transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .skills li:hover {
+      color: #005fa3;
+    }
+
+    .skills li:hover::before {
+      background-color: #005fa3;
+      box-shadow: 0 0 12px #005fa3;
+    }
+
+    .projects {
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+      background: white;
+      padding: 2.5rem;
+      border-radius: 14px;
+      box-shadow: 0 8px 22px var(--shadow-light);
+      border-left: 3px solid #0077cc;
+      border-right: 3px solid #3399cc;
+      min-width: 500px;
+      font-size: var(--font-large);
+      line-height: 1.65;
+      opacity: 0;
+      transform: translateY(30px);
+      animation-fill-mode: forwards;
+      animation-duration: 0.9s;
+      animation-timing-function: ease-out;
+      animation-delay: 0.6s;
+      animation-name: fadeSlideIn;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+      flex: 1 1 70%;
+      border-left: 3px solid #0077cc;
+      padding-left: 1.5rem;
+      box-sizing: border-box;
+    }
+
+    .projects:hover {
+      box-shadow: var(--hover-shadow);
+      transform: translateY(-5px) scale(1.02);
+      cursor: default;
+    }
+
+    body.dark-mode .projects {
+      background: #1e1e1e;
+      box-shadow: 0 8px 22px var(--shadow-dark);
+      color: var(--text-dark);
+    }
+
+    .project {
+      border-bottom: 1.8px solid #ddd;
+      padding-bottom: 1.2rem;
+      transition: background-color 0.3s ease;
+    }
+
+    .project:hover {
+      background-color: rgba(0, 119, 204, 0.08);
+      cursor: default;
+    }
+
+    body.dark-mode .project:hover {
+      background-color: rgba(0, 119, 204, 0.2);
+    }
+
+    .project h3 {
+      margin-top: 0;
+      margin-bottom: 0.3rem;
+      font-size: 1.7rem;
+      user-select: none;
+    }
+
+    .project p {
+      margin: 0.3rem 0;
+    }
+
+    /* Responsive: stack skills and projects vertically on narrow screens */
+    @media (max-width: 920px) {
+      .skills-projects {
+        flex-direction: column;
+        align-items: center;
+      }
+      .skills, .projects {
+        flex: none;
+        width: 100%;
+        min-width: unset;
+      }
+    }
+
+    /* Animations */
+    @keyframes fadeSlideIn {
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    footer {
+      margin-top: 3rem;
+      text-align: center;
+      font-weight: 600;
+      font-size: var(--font-large);
+      user-select: none;
+      color: var(--primary-color);
+    }
+
+    /* Add smooth scroll behavior */
+    html {
+      scroll-behavior: smooth;
+    }
+
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="header-left">
+      <a href="https://github.com/NarendraaP" target="_blank" rel="noopener noreferrer" aria-label="GitHub">GitHub</a>
+      <a href="https://linkedin.com/in/narendra-polisetti" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">LinkedIn</a>
+    </nav>
+
+    <div class="header-center" aria-label="Site Owner Name">
+      Narendra Polisetti
+    </div>
+
+    <nav class="header-right" aria-label="Contact and Actions">
+      <a href="mailto:narendraa1996@gmail.com" aria-label="Email Narendra">Email</a>
+      <a href="/resume.pdf" download aria-label="Download Resume">Resume</a>
+      <button id="darkModeToggle" aria-label="Toggle Dark Mode" title="Toggle Dark Mode">🌙</button>
+    </nav>
+  </header>
+
+  <main>
+    <div class="skills-projects">
+      <section class="skills" aria-labelledby="skillsHeading">
+        <h2 id="skillsHeading" style="text-align:center; user-select:none; font-size: 2.2rem; margin-bottom: 1.4rem;color: #2C3E50;">Technical Skills</h2>
+        <ul>
+          <li><strong>Programming Languages:</strong> JavaScript, Python, Java</li>
+          <li><strong>Web Technologies:</strong> React.js, HTML, CSS, Node.js</li>
+          <li><strong>Databases:</strong> PostgreSQL, SQL, NoSQL (e.g., MongoDB)</li>
+          <li><strong>Tools & Platforms:</strong> Git, Postman, Visual Studio, AWS, Agile Development</li>
+          <li><strong>Additional Skills:</strong> Curriculum Planning, Classroom Management, Team Collaboration</li>
+        </ul>
+      </section>
+
+      <section class="projects" id="projects" aria-labelledby="projectsHeading">
+        <h2 id="projectsHeading" style="text-align:center; user-select:none; font-size: 2.2rem; margin-bottom: 1.4rem;color: #2C3E50;">Projects</h2>
+
+        <article class="project" tabindex="0">
+          <h3 style="color:#3399cc">🚗 Vehicle Detection by using HOG/SVM and Tracking using various Algorithms</h3>
+          <p><strong>Role:</strong> Student</p>
+          <p><strong>Organization:</strong> National Institute of Technology - Silchar</p>
+          <p><strong>Duration:</strong> Aug 2017 – May 2018</p>
+          <p>
+            Contributed to project documentation, including literature review and experimental results.
+            Supported the team by organizing technical details on object detection and machine learning methods.
+            Assisted in preparing reports summarizing algorithm comparisons and findings.
+          </p>
+        </article>
+
+        <article class="project" tabindex="0">
+          <h3 style="color:#3399cc">🚚 Truck Monitoring & Notification System</h3>
+          <p><strong>Role:</strong> Senior Software Engineer</p>
+          <p><strong>Organization:</strong> ZF Digital Solutions India Private Limited</p>
+          <p><strong>Duration:</strong> Dec 2021 – Aug 2022</p>
+          <p>
+            Developed frontend components of the live tracking dashboard using React.js.
+            Authored and maintained comprehensive test cases to ensure application reliability and user experience quality.
+            Collaborated with backend and mobile teams to integrate real-time alerts and reports for truck owners.
+          </p>
+        </article>
+      </section>
+    </div>
+  </main>
+
+  <footer aria-label="Footer copyright">
+    © Narendra P 2025
+  </footer>
+
+  <script>
+    // Dark mode toggle
+    const toggleBtn = document.getElementById('darkModeToggle');
+    toggleBtn.textContent = localStorage.getItem('darkMode') === 'enabled' ? '☀️' : '🌙';
+
+    if(localStorage.getItem('darkMode') === 'enabled') {
+      document.body.classList.add('dark-mode');
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      document.body.classList.toggle('dark-mode');
+      const isDark = document.body.classList.contains('dark-mode');
+      localStorage.setItem('darkMode', isDark ? 'enabled' : 'disabled');
+      toggleBtn.textContent = isDark ? '☀️' : '🌙';
+    });
+  </script>
+</body>
+</html>
